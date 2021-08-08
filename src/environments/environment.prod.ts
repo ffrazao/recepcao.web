@@ -3,6 +3,6 @@ export const environment = {
   ambiente: 'produção',
   REST_API_URL: 'https://recepcao-rest.herokuapp.com',
   AUTHORIZATION_SERVER: 'https://recepcao-rest.herokuapp.com',
-  CLIENT_ID: 'recepcao',
-  CLIENT_SECRET: 'recepcao',
+  CLIENT_ID: 'recepcao_web',
+  CLIENT_SECRET: 'recepcao_web',
 };
