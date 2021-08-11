@@ -39,6 +39,18 @@ export class Servico<F, E, L> {
         return this._serviceRest;
     }
 
+    public set service(_service: CrudService<F, E, L>)  {
+        this._service = _service;
+    }
+
+    protected set serviceForm(_serviceForm: CrudFormService<F, E, L>) {
+        this._serviceForm = _serviceForm;
+    }
+
+    protected set serviceRest(_serviceRest: CrudRestService<F, E, L>) {
+        this._serviceRest = _serviceRest;
+    }
+
     protected get router(): Router {
         return this._router;
     }

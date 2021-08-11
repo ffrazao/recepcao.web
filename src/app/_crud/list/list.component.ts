@@ -41,11 +41,13 @@ export class ListComponent<F, E, L> extends Servico<F, E, L> implements OnInit, 
   }
 
   ngAfterViewInit() {
-    this.service.listaDataSource.sort = this.sort;
+    if (this.service.listaDataSource) {
+      this.service.listaDataSource.sort = this.sort;
+    }
   }
 
   protected configBotoes() {
-    const selecaoVazia = this.service.selecao.isEmpty();
+    const selecaoVazia = !this.service.selecao || this.service.selecao.isEmpty();
     for (const btn of this.service.botaoList) {
       switch (btn.codigo) {
         case 'inserir':
@@ -62,7 +64,7 @@ export class ListComponent<F, E, L> extends Servico<F, E, L> implements OnInit, 
           btn.acao = (evento, botao) => {
             this.visualizar(null);
           };
-          this.service.selecao.changed.subscribe((evt) => {
+          this.service.selecao && this.service.selecao.changed.subscribe((evt) => {
             btn.visivel = !evt.source.isEmpty();
           });
           btn.visivel = !selecaoVazia;
@@ -80,13 +82,13 @@ export class ListComponent<F, E, L> extends Servico<F, E, L> implements OnInit, 
           btn.acao = (evento, botao) => {
             this.excluir(null);
           };
-          this.service.selecao.changed.subscribe((evt) => {
+          this.service.selecao && this.service.selecao.changed.subscribe((evt) => {
             btn.visivel = !evt.source.isEmpty();
           });
           btn.visivel = !selecaoVazia;
           break;
         case 'agir':
-          this.service.selecao.changed.subscribe((evt) => {
+          this.service.selecao && this.service.selecao.changed.subscribe((evt) => {
             btn.visivel = !evt.source.isEmpty() && btn.subBotaoList.length > 0;
           });
           btn.visivel = !selecaoVazia && btn.subBotaoList.length > 0;
@@ -124,9 +126,9 @@ export class ListComponent<F, E, L> extends Servico<F, E, L> implements OnInit, 
   }
 
   public estaTudoSelecionado() {
-    const numSelected = this.service.selecao.selected
+    const numSelected = this.service.selecao?.selected
       .filter((value, index, array) => array.indexOf(value) === index).length;
-    const numRows = this.service.listaDataSource.data.map(v => v['id'])
+    const numRows = this.service.listaDataSource?.data.map(v => v['id'])
       .filter((value, index, array) => array.indexOf(value) === index).length;
     return numSelected === numRows;
   }

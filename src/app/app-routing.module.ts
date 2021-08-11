@@ -25,6 +25,10 @@ const routes: Routes = [
         path: 'pessoa',
         loadChildren: () => import('./pessoa/c-crud.module').then(m => m.CCrudModule),
       },
+      // {
+      //   path: 'molde',
+      //   loadChildren: () => import('./molde/molde.module').then(m => m.MoldeModule),
+      // },
     ]
   },
   {

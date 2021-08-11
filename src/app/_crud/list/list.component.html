@@ -48,31 +48,31 @@
     <table mat-table [dataSource]="service?.listaDataSource" matSort>
       <ng-container matColumnDef="select" sticky>
         <th mat-header-cell *matHeaderCellDef style="width: 50px;">
-          <mat-checkbox (change)="$event ? alternarSelecao() : null" [checked]="service?.selecao.hasValue() && estaTudoSelecionado()"
-            [indeterminate]="service?.selecao.hasValue() && !estaTudoSelecionado()" [aria-label]="etiquetaSelecao()">
+          <mat-checkbox (change)="$event ? alternarSelecao() : null" [checked]="service?.selecao?.hasValue() && estaTudoSelecionado()"
+            [indeterminate]="service?.selecao?.hasValue() && !estaTudoSelecionado()" [aria-label]="etiquetaSelecao()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? service?.selecao.toggle(row.id) : null"
-            [checked]="service?.selecao.isSelected(row.id)" [aria-label]="etiquetaSelecao(row.id)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? service?.selecao?.toggle(row.id) : null"
+            [checked]="service?.selecao?.isSelected(row.id)" [aria-label]="etiquetaSelecao(row.id)">
           </mat-checkbox>
         </td>
       </ng-container>
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row" (click)="service?.selecao.toggle(row.id)"> {{row.id}} </td>
+        <td mat-cell *matCellDef="let row" (click)="service?.selecao?.toggle(row.id)"> {{row.id}} </td>
       </ng-container>
       <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Nome </th>
-        <td mat-cell *matCellDef="let row" (click)="service?.selecao.toggle(row.id)"> {{row.nome}} </td>
+        <td mat-cell *matCellDef="let row" (click)="service?.selecao?.toggle(row.id)"> {{row.nome}} </td>
       </ng-container>
       <ng-container matColumnDef="codigo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
-        <td mat-cell *matCellDef="let row" (click)="service?.selecao.toggle(row.id)"> {{row.codigo}} </td>
+        <td mat-cell *matCellDef="let row" (click)="service?.selecao?.toggle(row.id)"> {{row.codigo}} </td>
       </ng-container>
       <ng-container matColumnDef="descricao">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Descrição </th>
-        <td mat-cell *matCellDef="let row" (click)="service?.selecao.toggle(row.id)"> {{row.descricao}} </td>
+        <td mat-cell *matCellDef="let row" (click)="service?.selecao?.toggle(row.id)"> {{row.descricao}} </td>
       </ng-container>
 
       <ng-container matColumnDef="marcar" stickyEnd>

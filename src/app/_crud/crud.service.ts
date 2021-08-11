@@ -199,6 +199,10 @@ export class CrudService<F, E, L> {
     return this._funcionalidade;
   }
 
+  public set funcionalidade(_funcionalidade: string) {
+    this._funcionalidade = _funcionalidade;
+  }
+
   public get estado(): string | CrudEstado {
     if (!this._estado) {
       this._estado = ESTADO_INICIAL;
