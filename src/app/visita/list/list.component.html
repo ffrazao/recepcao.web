@@ -1,0 +1,26 @@
+<p>Visitas Cadastradas</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Entrada</th>
+            <th>Visitante</th>
+            <th>Destino</th>
+            <th>Saída</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of dados; let i = index">
+            <th>{{i}}.</th>
+            <th>{{item.entrada}}</th>
+            <th>
+                <ol>
+                    <li *ngFor="let visitante of item.visitanteList">{{visitante.nome}}</li>
+                </ol>
+            </th>
+            <th>{{item.local.nome}}</th>
+            <th>{{item.saida}}</th>
+        </tr>
+    </tbody>
+</table>
