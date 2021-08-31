@@ -1,26 +1,44 @@
 <p>Visitas Cadastradas</p>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>#</th>
-            <th>Entrada</th>
-            <th>Visitante</th>
-            <th>Destino</th>
-            <th>Saída</th>
+            <th>Hora Entrada</th>
+            <th>Local Entrada</th>
+            <th>Visitante(s)</th>
+            <th>Local Destino</th>
+            <th>Autorizado Por</th>
+            <th>Motivo Visita</th>
+            <th>Hora Saída</th>
+            <th>Incluído Por</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of dados; let i = index">
-            <th>{{i}}.</th>
-            <th>{{item.entrada}}</th>
-            <th>
+            <td>{{i + 1}}.</td>
+            <td>{{item.entrada | date: 'dd/MM/yyyy hh:mm'}}</td>
+            <td>{{item.localEntrada.nome}}</td>
+            <td>
                 <ol>
-                    <li *ngFor="let visitante of item.visitanteList">{{visitante.nome}}</li>
+                    <li *ngFor="let visitaVisitante of item.visitaVisitanteList">
+                        <a>{{visitaVisitante.visitante.nome}}</a>
+                        {{visitaVisitante.entidadeRepresentante ?
+                        '(' + visitaVisitante.entidadeRepresentante.nome + ')' : ''}}
+                        | {{visitaVisitante.telefone}} |
+                        {{visitaVisitante.eMail}}
+                    </li>
                 </ol>
-            </th>
-            <th>{{item.local.nome}}</th>
-            <th>{{item.saida}}</th>
+            </td>
+            <td>{{item.localVisita.nome}}, ({{item.localVisita.unidadeOrganizacional.nome}})</td>
+            <td>
+                <div><b>{{item.autorizador.nome}}</b></div>
+                <div>matrícula ({{item.autorizador.matricula}})</div>
+                <div>ramal ({{item.autorizador.ramal}})</div>
+            </td>
+            <td>{{item.motivo}}</td>
+            <td>{{item.saida | date: 'dd/MM/yyyy hh:mm'}}</td>
+            <td>{{item.incluidoPor.login}}</td>
         </tr>
     </tbody>
 </table>

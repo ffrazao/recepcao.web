@@ -22,6 +22,7 @@ export class RestService {
 
   public create(entidade: Visita): Observable<number> {
     entidade['id'] = null;
+    debugger;
     return this._http.post<number>(
       `${environment.REST_API_URL}/${this.funcionalidade}`,
       entidade,

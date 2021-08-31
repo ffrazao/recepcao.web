@@ -7,7 +7,7 @@ export class VisitaVisitante implements EntidadeId {
     public id: number;
     public visitante: Visitante;
     public telefone: string;
-    public email: string;
+    public eMail: string;
     public entidadeRepresentante: EntidadeRepresentante;
 
 }
