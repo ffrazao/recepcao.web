@@ -8,5 +8,6 @@ export class Local implements EntidadeId {
     public nome: string;
     public unidadeOrganizacional: UnidadeOrganizacional;
     public endereco: Endereco;
+    public portaria: string;
 
 }

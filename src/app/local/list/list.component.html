@@ -50,7 +50,7 @@
                                     <tr *ngFor="let subItem of item.visitaVisitanteList; let j = index">
                                         <td>{{i + 1}}.{{j + 1}}.</td>
                                         <td>
-                                            <img *ngIf="item.value.visitante?.foto" src="{{subItem.visitante.foto ? 'data:image/jpg;base64,' + subItem.visitante.foto: ''}}"
+                                            <img  *ngIf="item.value.visitante?.foto" src="{{subItem.visitante.foto ? 'data:image/jpg;base64,' + subItem.visitante.foto: ''}}"
                                                 width="50" height="50" alt="Foto do visitante" />
                                         </td>
                                         <td>{{subItem.visitante?.nome}}</td>

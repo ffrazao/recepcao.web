@@ -5,9 +5,9 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { VisitaFiltroDTO } from '../modelo/dto/visita.filtro.dto';
-import { Visita } from '../modelo/entidade/visita';
-import { RestService } from './rest.service';
+import { VisitaFiltroDTO } from '../../modelo/dto/visita.filtro.dto';
+import { Visita } from '../../modelo/entidade/visita';
+import { RestService } from '../service/rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +20,8 @@ export class ListResolver implements Resolve<Visita[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Visita[]> {
-    console.log('ListResolver');
-    let filtro = new VisitaFiltroDTO();
-    return this._servico.filtrar(filtro);
+    this._servico.filtro = this._servico.filtro ? this._servico.filtro : new VisitaFiltroDTO();
+    return this._servico.filtrar();
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Visita } from 'src/app/modelo/entidade/visita';
-import { VisitaVisitante } from 'src/app/modelo/entidade/visita-visitante';
+
+import { Usuario } from 'src/app/modelo/entidade/usuario';
 import { RestService } from '../service/rest.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { RestService } from '../service/rest.service';
 })
 export class ListComponent implements OnInit {
 
-  dados: Visita[];
+  dados: Usuario[];
 
   constructor(
     private _route: ActivatedRoute,
@@ -21,14 +21,6 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     debugger;
     this.dados = this._route.snapshot.data[0];
-  }
-
-  registrarSaida(info: VisitaVisitante) {
-    this._restService.registrarSaida(info.id).subscribe(r => {
-      console.log('r', r);
-      info.saida = r['saida'];
-      info.saidaUsuario = r['saidaUsuario'];
-    });
   }
 
 }

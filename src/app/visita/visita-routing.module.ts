@@ -1,26 +1,40 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { VisitaComponent } from './visita.component';
-import { ListComponent } from './list/list.component';
-import { FiltroComponent } from './filtro/filtro.component';
-import { FormComponent } from './form/form.component';
-import { ListResolver } from './list.resolver';
-import { FiltroResolver } from './filtro.resolver';
-import { FormResolver } from './form.resolver';
+import { VisitaComponent } from "./visita.component";
 
-const routes: Routes = [{
-  path: '',
-  component: VisitaComponent,
-  children: [
-    {path: '', component: ListComponent, resolve: [ListResolver]},
-    {path: 'filtro', component: FiltroComponent, resolve: [FiltroResolver]},
-    {path: ':id/editar', component: FormComponent, resolve: [FormResolver], pathMatch: 'full'},
-    {path: ':id', component: FormComponent, resolve: [FormResolver], pathMatch: 'full'},
-  ]
-}];
+const routes: Routes = [
+  {
+    path: "",
+    component: VisitaComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./list/list.module").then((m) => m.ListModule),
+      },
+      {
+        path: "filtro",
+        loadChildren: () =>
+          import("./filtro/filtro.module").then((m) => m.FiltroModule),
+      },
+      {
+        path: ":id/editar",
+        loadChildren: () =>
+          import("./form/form.module").then((m) => m.FormModule),
+        pathMatch: "full",
+      },
+      {
+        path: ":id",
+        loadChildren: () =>
+          import("./form/form.module").then((m) => m.FormModule),
+        pathMatch: "full",
+      },
+    ],
+  },
+];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class VisitaRoutingModule { }
+export class VisitaRoutingModule {}
