@@ -1,1 +1,59 @@
-<p>form works!</p>
+<p>Formulário Visita</p>
+<button class="btn btn-primary" [routerLink]="['./novo']">Incluir</button>
+<button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
+<div class="container">
+    <form [formGroup]="formulario">
+        <div class="form-group">
+            <label for="entradaLocal">Entrada</label>
+            <select class="form-control" id="entradaLocal" formControlName="entradaLocal" [compareWith]="idListComparar">
+                <option *ngFor="let item of localList | callback : filtraLocal : ['S']" [ngValue]="item">
+                    {{item.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="entrada">Hora Entrada</label>
+            <input type="datetime-local" class="form-control" id="entrada" placeholder="dd/mm/aaaa hh:mm" formControlName="entrada">
+        </div>
+        <div class="form-group">
+            <label for="destinoLocal">Destino</label>
+            <select class="form-control" id="destinoLocal" formControlName="destinoLocal" [compareWith]="idListComparar">
+                <option *ngFor="let item of localList | callback : filtraLocal : ['N']" [ngValue]="item">
+                    {{item.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="motivo">Motivo</label>
+            <textarea class="form-control" id="motivo" rows="3" formControlName="motivo"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Visitantes</label>
+            <app-visita-visitante [dados]="formulario.controls.visitaVisitanteList" formArrayName="visitaVisitanteList"></app-visita-visitante>
+        </div>
+        <div class="form-group">
+            <label for="autorizador">Autorizador</label>
+            <select class="form-control" id="autorizador">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Incluido por</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+    </form>
+</div>
+<button class="btn btn-primary" [routerLink]="['../novo']">Salvar</button>
+<button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
+
+<div>
+    {{formulario.value | json}}
+</div>
+
+<div>
+    {{usuarioList | json}}
+</div>

@@ -1,28 +1,26 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs";
 
-import { LoginService } from '../seguranca/login/login.service';
-import { environment } from '../../environments/environment';
-import { objectToQueryString } from '../comum/ferramenta/ferramenta-comum';
-import { Visita } from '../modelo/entidade/visita';
-import { VisitaFiltroDTO } from '../modelo/dto/visita.filtro.dto';
+import { LoginService } from "../../seguranca/login/login.service";
+import { environment } from "../../../environments/environment";
+import { objectToQueryString } from "../../comum/ferramenta/ferramenta-comum";
+import { Visita } from "../../modelo/entidade/visita";
+import { VisitaFiltroDTO } from "../../modelo/dto/visita.filtro.dto";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class RestService {
 
-  private funcionalidade = 'visita';
+  private funcionalidade = "visita";
 
-  constructor(
-    private _http: HttpClient,
-    private loginService: LoginService,
-  ) { }
+  filtro = new VisitaFiltroDTO();
+
+  constructor(private _http: HttpClient, private loginService: LoginService) {}
 
   public create(entidade: Visita): Observable<number> {
-    entidade['id'] = null;
-    debugger;
+    entidade["id"] = null;
     return this._http.post<number>(
       `${environment.REST_API_URL}/${this.funcionalidade}`,
       entidade,
@@ -76,14 +74,13 @@ export class RestService {
     // );
   }
 
-  public filtrar(filtro: VisitaFiltroDTO): Observable<Visita[]> {
+  public filtrar(): Observable<Visita[]> {
     // captar parametros do filtro
-    console.log(2);
-    let param = '';
-    if (filtro) {
-      param = objectToQueryString(filtro);
+    let param = "";
+    if (this.filtro) {
+      param = objectToQueryString(this.filtro);
       if (param) {
-        param = '?' + param;
+        param = "?" + param;
       }
     }
     if (this.funcionalidade) {
@@ -93,4 +90,12 @@ export class RestService {
       );
     }
   }
+
+  public registrarSaida(id: number) {
+    return this._http.put<string>(
+      `${environment.REST_API_URL}/${this.funcionalidade}/registrar-saida/${id}`, null,
+      { headers: this.loginService.apiRequestHttpHeader }
+    );
+  }
+
 }
