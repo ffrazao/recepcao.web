@@ -61,9 +61,9 @@ export class LoginService {
     ).pipe(
       catchError(error => {
         console.error(error);
-        if (error && error.error && error.error.error && error.error.error.toLowerCase() === 'invalid_token') {
-          this._localStorageService.apagar(LocalStorageService.CHAVE_SEGURANCA);
-        }
+        this._localStorageService.apagar(LocalStorageService.CHAVE_SEGURANCA);
+        // if (error && error.error && error.error.error && error.error.error.toLowerCase() === 'invalid_token') {
+        // }
         return of(null);
       })
     );

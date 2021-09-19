@@ -7,21 +7,11 @@
             <mat-icon>home</mat-icon>
         </button>
 
-        <!-- <button mat-button [matMenuTriggerFor]="cadastroMenu" *ngIf="estaLogado && temPerfil(['Admin'])"> -->
-        <button mat-button [matMenuTriggerFor]="cadastroMenu">
+        <button mat-button [matMenuTriggerFor]="cadastroMenu" *ngIf="estaLogado">
+            <!-- <button mat-button [matMenuTriggerFor]="cadastroMenu"> -->
             Cadastro
         </button>
         <mat-menu #cadastroMenu="matMenu">
-            <button mat-menu-item>
-                <a [routerLink]="['/', 'teste']">
-                    Teste
-                </a>
-            </button>
-            <button mat-menu-item>
-                <a [routerLink]="['/', 'modelo']">
-                    Modelo
-                </a>
-            </button>
             <button mat-menu-item>
                 <a [routerLink]="['/', 'pessoa']">
                     Pessoa
@@ -32,7 +22,7 @@
                     Visita
                 </a>
             </button>
-              <!-- <button mat-menu-item>
+            <!-- <button mat-menu-item>
                 <a [routerLink]="['/', 'cadastro', 'produto-modelo']">
                     Modelo de Produtos
                 </a>
@@ -43,7 +33,7 @@
                 </a>
             </button> -->
         </mat-menu>
-<!-- 
+        <!-- 
         <button mat-button [matMenuTriggerFor]="acoesMenu" *ngIf="estaLogado && temPerfil(['Admin', 'Parceiro'])">
             Ações
         </button>
@@ -81,6 +71,10 @@
             [src]="login && login.foto ? 'data:image/jpeg;base64,' + login.foto : SEM_FOTO" class="mx-auto d-block"
             style="max-height: 100px; max-width: 100px; border-radius: 50%;">
 
+        <label *ngIf="!estaLogado">
+            Entrar <mat-icon>forward</mat-icon>
+        </label>
+
         <button mat-icon-button [matMenuTriggerFor]="sistemaMenu">
             <i class="fas fa-user"></i>
             <span class="caret"></span>
@@ -100,4 +94,5 @@
         </mat-menu>
     </mat-toolbar-row>
 </mat-toolbar>
+
 <div style="height: 64px;" *ngIf="false"></div>

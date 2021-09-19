@@ -13,17 +13,17 @@ const routes: Routes = [
         path: '',
         loadChildren: () => import('./casa/casa.module').then(m => m.CasaModule)
       },
-      {
-        path: 'teste',
-        loadChildren: () => import('./_crud/crud.module').then(m => m.CrudModule),
-      },
-      {
-        path: 'modelo',
-        loadChildren: () => import('./_c/c-crud.module').then(m => m.CCrudModule),
-      },
+      // {
+      //   path: 'teste',
+      //   loadChildren: () => import('./_crud/crud.module').then(m => m.CrudModule),
+      // },
+      // {
+      //   path: 'modelo',
+      //   loadChildren: () => import('./_c/c-crud.module').then(m => m.CCrudModule),
+      // },
       {
         path: 'pessoa',
-        loadChildren: () => import('./pessoa/c-crud.module').then(m => m.CCrudModule),
+        loadChildren: () => import('./pessoa/pessoa.module').then(m => m.PessoaModule),
       },
       {
         path: 'visita',
