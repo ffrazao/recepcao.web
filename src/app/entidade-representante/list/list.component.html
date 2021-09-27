@@ -1,0 +1,80 @@
+<p>Relação de Visita</p>
+<button class="btn btn-primary" [routerLink]="['./novo']">Incluir</button>
+<button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
+<div class="table-responsive">
+    <table class="table table-hover table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Entrada Local</th>
+                <th>Entrada Data</th>
+                <th>Destino</th>
+                <th>Motivo</th>
+                <th>Autorizado por</th>
+                <th>Incluído por</th>
+                <th rowspan="2">Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let item of dados; let i = index">
+                <tr>
+                    <td>{{i + 1}}.</td>
+                    <td>{{item.entradaLocal.nome}}</td>
+                    <td>{{item.entrada | date: 'EEEE, dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{item.destinoLocal.nome}}</td>
+                    <td>{{item.motivo}}</td>
+                    <td>{{item.autorizador.nome}}{{item.autorizador.contato1 ? ", " + item.autorizador.contato1 : ""}}
+                    </td>
+                    <td>{{item.incluidoPor.login}}</td>
+                    <td>
+                        <button class="btn btn-secondary" [routerLink]="['./', item.id]">Ver</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th></th>
+                                        <th>Foto</th>
+                                        <th>Visitante</th>
+                                        <th>Telefone</th>
+                                        <th>E-mail</th>
+                                        <th>Entidade Representante</th>
+                                        <th>Saída</th>
+                                        <th>Registrado Por</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let subItem of item.visitaVisitanteList; let j = index">
+                                        <td>{{i + 1}}.{{j + 1}}.</td>
+                                        <td>
+                                            <img  *ngIf="item.value.visitante?.foto" src="{{subItem.visitante.foto ? 'data:image/jpg;base64,' + subItem.visitante.foto: ''}}"
+                                                width="50" height="50" alt="Foto do visitante" />
+                                        </td>
+                                        <td>{{subItem.visitante?.nome}}</td>
+                                        <td>{{subItem.telefone}}</td>
+                                        <td>{{subItem.email}}</td>
+                                        <td>{{subItem.entidadeRepresentante?.nome}}</td>
+                                        <td>
+                                            <ng-container *ngIf="subItem.saida">{{subItem.saida | date: 'EEEE,
+                                                dd/MM/yyyy HH:mm'}}</ng-container>
+                                            <button class="btn btn-secondary" *ngIf="!subItem.saida"
+                                                (click)="registrarSaida(subItem)">Agora</button>
+                                        </td>
+                                        <td>
+                                            <ng-container *ngIf="subItem.saida">{{subItem.saidaUsuario?.login}}
+                                            </ng-container>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+{{dados | json}}

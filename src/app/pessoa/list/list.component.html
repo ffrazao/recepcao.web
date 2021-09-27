@@ -6,6 +6,7 @@
         <thead class="table-dark">
             <tr>
                 <th>#</th>
+                <th>Foto</th>
                 <th>Nome</th>
                 <th>Tipo</th>
                 <th>cpf/ cnpj</th>
@@ -20,6 +21,9 @@
             <ng-container *ngFor="let item of dados; let i = index">
                 <tr>
                     <td>{{i + 1}}.</td>
+                    <td>
+                        <img class="img-thumbnail" src="data:image/png;base64,{{item.visitante.foto}}" *ngIf="item.visitante?.foto">
+                    </td>
                     <td>{{item.nome}}</td>
                     <td>{{item.pessoaTipo}}</td>
                     <td>{{item.cpfCnpj}}</td>
@@ -31,20 +35,32 @@
                         <button class="btn btn-secondary" [routerLink]="['./', item.id]">Ver</button>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="8">
+                <tr *ngIf="item.pessoaEnderecoList.length && false">
+                    <td colspan="9">
                         <div class="table-responsive">
                             <table class="table table-hover table-striped">
                                 <thead class="table-light">
                                     <tr>
                                         <th></th>
-                                        <th>Endereço</th>
+                                        <td>Logradouro</td>
+                                        <td>Complemento</td>
+                                        <td>Número</td>
+                                        <td>Bairro</td>
+                                        <td>Cidade</td>
+                                        <td>UF</td>
+                                        <td>CEP</td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let subItem of item.pessoaEnderecoList; let j = index">
                                         <td>{{i + 1}}.{{j + 1}}.</td>
-                                        <td>{{subItem.endereco}}</td>
+                                        <td>{{subItem.endereco.logradouro}}</td>
+                                        <td>{{subItem.endereco.complemento}}</td>
+                                        <td>{{subItem.endereco.numero}}</td>
+                                        <td>{{subItem.endereco.bairro}}</td>
+                                        <td>{{subItem.endereco.cidade}}</td>
+                                        <td>{{subItem.endereco.uf}}</td>
+                                        <td>{{subItem.endereco.cep}}</td>
                                     </tr>
                                 </tbody>
                             </table>

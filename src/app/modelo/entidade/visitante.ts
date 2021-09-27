@@ -1,9 +1,10 @@
 import { Pessoa } from './pessoa';
 import { EntidadeRepresentante } from './entidade-representante';
 
-export class Visitante extends Pessoa {
+export class Visitante {
 
-    public tefone: string;
+    public id: number;
+    public telefone: string;
     public email: string;
     public entidadeRepresentante: EntidadeRepresentante;
     public foto: number;

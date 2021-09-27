@@ -27,9 +27,14 @@ export class FormService {
       contato2: [entidade.contato2, []],
       contato3: [entidade.contato3, []],
       pessoaEnderecoList: this.criarPessoaEnderecoList(entidade.pessoaEnderecoList),
-      funcionario: this.criarFuncionario(entidade.funcionario),
-      visitante: this.criarVisitante(entidade.visitante),
     });
+    // os atributos a seguir são opcionais e só serão criados caso existam
+    if (entidade.funcionario) {
+      result.addControl('funcionario', this.criarFuncionario(entidade.funcionario));
+    }
+    if (entidade.visitante) {
+      result.addControl('visitante', this.criarVisitante(entidade.visitante));
+    }
     return result;
   }
 
@@ -87,7 +92,7 @@ export class FormService {
     entidade = entidade ? entidade : new Visitante();
     let result = this._fb.group({
       id: [entidade.id, []],
-      tefone: [entidade.tefone, []],
+      telefone: [entidade.telefone, []],
       email: [entidade.email, []],
       entidadeRepresentante: [entidade.entidadeRepresentante, []],
       foto: [entidade.foto, []],
