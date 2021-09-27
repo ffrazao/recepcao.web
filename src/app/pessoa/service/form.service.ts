@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Funcionario } from "src/app/modelo/entidade/funcionario";
-import { Local } from "src/app/modelo/entidade/local";
-import { Usuario } from "src/app/modelo/entidade/usuario";
 
-import { Pessoa } from "src/app/modelo/entidade/pessoa";
-import { PessoaEndereco } from "src/app/modelo/entidade/pessoa-endereco";
+import { Pessoa } from "../../modelo/entidade/pessoa";
+import { PessoaEndereco } from "../../modelo/entidade/pessoa-endereco";
+import { Funcionario } from "../../modelo/entidade/funcionario";
+import { Visitante } from "../../modelo/entidade/visitante";
+import { Endereco } from "../../modelo/entidade/endereco";
+import { Lotacao } from "../../modelo/entidade/lotacao";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormService {
-  constructor(private _fb: FormBuilder) {}
+
+  constructor(private _fb: FormBuilder) { }
 
   criar(entidade: Pessoa): FormGroup {
     entidade = entidade ? entidade : new Pessoa();
@@ -25,6 +27,8 @@ export class FormService {
       contato2: [entidade.contato2, []],
       contato3: [entidade.contato3, []],
       pessoaEnderecoList: this.criarPessoaEnderecoList(entidade.pessoaEnderecoList),
+      funcionario: this.criarFuncionario(entidade.funcionario),
+      visitante: this.criarVisitante(entidade.visitante),
     });
     return result;
   }
@@ -43,8 +47,67 @@ export class FormService {
     entidade = entidade ? entidade : new PessoaEndereco();
     let result = this._fb.group({
       id: [entidade.id, []],
-      endereco: [entidade.endereco, []],
+      endereco: this.criaEndereco(entidade.endereco),
     });
     return result;
   }
+
+  criarFuncionario(entidade: Funcionario) {
+    entidade = entidade ? entidade : new Funcionario();
+    let result = this._fb.group({
+      id: [entidade.id, []],
+      matricula: [entidade.matricula, []],
+      ramal: [entidade.ramal, []],
+      lotacaoList: this.criarLotacaoList(entidade.lotacaoList),
+    });
+    return result;
+  }
+
+  criarLotacaoList(lista: Lotacao[]) {
+    lista = lista ? lista : new Array<Lotacao>();
+    const listaCtrl = [];
+    for (const ent of lista) {
+      listaCtrl.push(this.criarLotacao(ent));
+    }
+    const result = this._fb.array(listaCtrl, [Validators.required]);
+    return result;
+  }
+
+  criarLotacao(entidade: Lotacao) {
+    entidade = entidade ? entidade : new Lotacao();
+    let result = this._fb.group({
+      id: [entidade.id, []],
+      unidadeOrganizacional: [entidade.unidadeOrganizacional, []],
+      ramal: [entidade.ramal, []],
+    });
+    return result;
+  }
+
+  criarVisitante(entidade: Visitante) {
+    entidade = entidade ? entidade : new Visitante();
+    let result = this._fb.group({
+      id: [entidade.id, []],
+      tefone: [entidade.tefone, []],
+      email: [entidade.email, []],
+      entidadeRepresentante: [entidade.entidadeRepresentante, []],
+      foto: [entidade.foto, []],
+    });
+    return result;
+  }
+
+  criaEndereco(entidade: Endereco) {
+    entidade = entidade ? entidade : new Endereco();
+    let result = this._fb.group({
+      id: [entidade.id, []],
+      logradouro: [entidade.logradouro, []],
+      complemento: [entidade.complemento, []],
+      numero: [entidade.numero, []],
+      bairro: [entidade.bairro, []],
+      cidade: [entidade.cidade, []],
+      uf: [entidade.uf, []],
+      cep: [entidade.cep, []],
+    });
+    return result;
+  }
+
 }

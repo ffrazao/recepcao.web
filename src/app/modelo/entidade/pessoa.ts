@@ -1,6 +1,8 @@
 import { EntidadeId } from '../entidade-id';
 import { PessoaTipo } from '../dominio/pessoa-tipo';
 import { PessoaEndereco } from './pessoa-endereco';
+import { Funcionario } from './funcionario';
+import { Visitante } from './visitante';
 
 export class Pessoa implements EntidadeId {
 
@@ -13,5 +15,6 @@ export class Pessoa implements EntidadeId {
     public contato2: string;
     public contato3: string;
     public pessoaEnderecoList: PessoaEndereco[] = [];
-
+    public funcionario: Funcionario;
+    public visitante: Visitante;
 }

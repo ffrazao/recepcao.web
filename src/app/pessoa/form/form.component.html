@@ -4,46 +4,98 @@
 <div class="container">
     <form [formGroup]="formulario">
         <div class="form-group">
-            <label for="entradaLocal">Entrada</label>
-            <select class="form-control" id="entradaLocal" formControlName="entradaLocal" [compareWith]="idListComparar">
-                <option *ngFor="let item of localList | callback : filtraLocal : ['S']" [ngValue]="item">
-                    {{item.nome}}
-                </option>
-            </select>
+            <label for="entradaLocal">Tipo de Pessoa</label>
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pessoaTipo" id="pessoaTipoPF" value="PF"
+                        formControlName="pessoaTipo" />
+                    <label class="form-check-label" for="pessoaTipoPF">Pessoa Física</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="pessoaTipo" id="pessoaTipoPJ" value="PJ"
+                        formControlName="pessoaTipo" />
+                    <label class="form-check-label" for="pessoaTipoPJ">Pessoa Jurídica</label>
+                </div>
+            </div>
         </div>
         <div class="form-group">
-            <label for="entrada">Hora Entrada</label>
-            <input type="datetime-local" class="form-control" id="entrada" placeholder="dd/mm/aaaa hh:mm" formControlName="entrada">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" id="nome" formControlName="nome">
         </div>
         <div class="form-group">
-            <label for="destinoLocal">Destino</label>
-            <select class="form-control" id="destinoLocal" formControlName="destinoLocal" [compareWith]="idListComparar">
-                <option *ngFor="let item of localList | callback : filtraLocal : ['N']" [ngValue]="item">
-                    {{item.nome}}
-                </option>
-            </select>
+            <label for="cpfCnpj">CPF/CNPJ</label>
+            <input type="text" class="form-control" id="cpfCnpj" formControlName="cpfCnpj">
         </div>
         <div class="form-group">
-            <label for="motivo">Motivo</label>
-            <textarea class="form-control" id="motivo" rows="3" formControlName="motivo"></textarea>
+            <label for="email">E-mail</label>
+            <input type="email" class="form-control" id="email" formControlName="email">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Visitantes</label>
-            <app-pessoa-endereco [dados]="formulario.controls.pessoaEnderecoList" formArrayName="pessoaEnderecoList"></app-pessoa-endereco>
+            <label for="contato1">Número de Contato (1)</label>
+            <input type="text" class="form-control" id="contato1" formControlName="contato1">
         </div>
         <div class="form-group">
-            <label for="autorizador">Autorizador</label>
-            <select class="form-control" id="autorizador">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
+            <label for="contato2">Número de Contato (2)</label>
+            <input type="text" class="form-control" id="contato2" formControlName="contato2">
         </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">Incluido por</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <label for="contato3">Número de Contato (3)</label>
+            <input type="text" class="form-control" id="contato3" formControlName="contato3">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-secondary" (click)="true">Incluir</button>
+            <table class="table" formArrayName="pessoaEnderecoList">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>CEP</th>
+                        <th>Logradouro</th>
+                        <th>Complemento</th>
+                        <th>Número</th>
+                        <th>Bairro</th>
+                        <th>Cidade</th>
+                        <th>UF</th>
+                        <th>Acao</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of formulario.controls.pessoaEnderecoList['controls']; index as i">
+                        <ng-container *ngIf="!item.editar">
+                            <td>{{i}}.</td>
+                            <td>{{item.value.endereco.cep}}</td>
+                            <td>{{item.value.endereco.logradouro}}</td>
+                            <td>{{item.value.endereco.complemento}}</td>
+                            <td>{{item.value.endereco.numero}}</td>
+                            <td>{{item.value.endereco.bairro}}</td>
+                            <td>{{item.value.endereco.cidade}}</td>
+                            <td>{{item.value.endereco.uf}}</td>
+                            <td>
+                                <button class="btn btn-secondary" (click)="item.editar = true">Editar</button>
+                                <button class="btn btn-secondary" (click)="item.editar = true">Excluir</button>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="item.editar" [formGroupName]="i">
+                            <ng-container formGroupName="endereco">
+                                <td>{{i}}.</td>
+                                <td><input type="text" class="form-control" placeholder="CEP" formControlName="cep">
+                                </td>
+                                <td><input type="text" class="form-control" placeholder="Logradouro"
+                                        formControlName="logradouro"></td>
+                                <td><input type="text" class="form-control" placeholder="Complemento"
+                                        formControlName="complemento"></td>
+                                <td><input type="text" class="form-control" placeholder="Número"
+                                        formControlName="numero"></td>
+                                <td><input type="text" class="form-control" placeholder="Bairro"
+                                        formControlName="bairro"></td>
+                                <td><input type="text" class="form-control" placeholder="Cidade"
+                                        formControlName="cidade"></td>
+                                <td><input type="text" class="form-control" placeholder="UF" formControlName="uf"></td>
+                                <td><button class="btn btn-secondary" (click)="item.editar = false">Salvar</button></td>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </form>
 </div>
@@ -51,9 +103,5 @@
 <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
 
 <div>
-    {{formulario.value | json}}
-</div>
-
-<div>
-    {{usuarioList | json}}
+    {{formulario.controls.pessoaEnderecoList.value | json}}
 </div>
