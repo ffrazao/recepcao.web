@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { idListComparar } from 'src/app/comum/ferramenta/ferramenta-comum';
-import { PessoaEndereco } from 'src/app/modelo/entidade/pessoa-endereco';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { idListComparar, removeMime } from '../../comum/ferramenta/ferramenta-comum';
+import { PessoaEndereco } from '../../modelo/entidade/pessoa-endereco';
 import { Local } from '../../modelo/entidade/local';
 import { Usuario } from '../../modelo/entidade/usuario';
 import { Funcionario } from '../../modelo/entidade/funcionario';
 import { Visitante } from '../../modelo/entidade/visitante';
 import { FormService } from '../service/form.service';
 import { EntidadeRepresentante } from 'src/app/modelo/entidade/entidade-representante';
+import { RestService } from '../service/rest.service';
+import { MensagemService } from '../../comum/servico/mensagem/mensagem.service';
+import { AnexarService } from '../../comum/servico/anexar/anexar.service';
+import { AnexarTipo } from 'src/app/comum/servico/anexar/anexar-tipo';
 
 @Component({
   selector: 'app-form',
@@ -25,16 +29,20 @@ export class FormComponent implements OnInit {
   entidadeRepresentanteList: EntidadeRepresentante[];
 
   constructor(
+    private _rest: RestService,
     private _form: FormService,
-    private _route: ActivatedRoute,
+    private _activatedRoute: ActivatedRoute,
+    private _route: Router,
+    private _mensagem: MensagemService,
+    private _anexar: AnexarService,
   ) {
   }
 
   ngOnInit(): void {
-    this.formulario = this._form.criar(this._route.snapshot.data[0]);
-    this.localList = this._route.snapshot.data[1];
-    this.usuarioList = this._route.snapshot.data[2];
-    this.entidadeRepresentanteList = this._route.snapshot.data[3];
+    this.formulario = this._form.criar(this._activatedRoute.snapshot.data[0]);
+    this.localList = this._activatedRoute.snapshot.data[1];
+    this.usuarioList = this._activatedRoute.snapshot.data[2];
+    this.entidadeRepresentanteList = this._activatedRoute.snapshot.data[3];
   }
 
   idListComparar(o1, o2) {
@@ -77,6 +85,27 @@ export class FormComponent implements OnInit {
     } else {
       this.formulario?.removeControl('visitante');
     }
+  }
+
+  salvar() {
+    let entidade = this.formulario.value;
+    if (entidade.id) {
+      this._rest.update(entidade.id, entidade).subscribe(r => {
+        this._route.navigate([`pessoa/${entidade.id}`]);
+        this._mensagem.sucesso('Dados Salvos', 'Sucesso');
+      });
+    } else {
+      this._rest.create(entidade).subscribe(r => {
+        this._route.navigate([`pessoa/${r}`]);
+        this._mensagem.sucesso('Dados Salvos', 'Sucesso');
+      });
+    }
+  }
+
+  carregarFoto() {
+    this._anexar.carregar([AnexarTipo.IMAGEM], false).subscribe(r => {
+      this.formulario.get('visitante.foto').setValue(removeMime(r['IMAGEM'][0]));
+    });
   }
 
 }

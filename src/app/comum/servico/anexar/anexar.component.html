@@ -9,7 +9,9 @@
         <div class="row" *ngIf="exibirAnexarTipo('IMAGEM')">
             <div class="col-2">Imagem</div>
             <div class="col-10">
-                <app-imagem [multiplo]="data.multiplo" (resultado)="setImagem($event)"></app-imagem>
+                <app-imagem [multiplo]="data.multiplo" (resultado)="setImagem($event)"  style="width: 100%; height: 100%;">
+
+                </app-imagem>
             </div>
         </div>
         <div class="row" *ngIf="exibirAnexarTipo('LOCALIZACAO')">

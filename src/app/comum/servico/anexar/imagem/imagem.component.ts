@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -8,6 +8,14 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 })
 export class ImagemComponent implements OnInit {
 
+  @ViewChild("video")
+  public video: ElementRef;
+
+  @ViewChild("canvas")
+  public canvas: ElementRef;
+
+  public captures: Array<any>;
+
   fileData: File = null;
   @Output('resultado')
   resultado = new EventEmitter<string[]>();
@@ -16,7 +24,30 @@ export class ImagemComponent implements OnInit {
   fileUploadProgress: string = null;
   uploadedFilePath: string = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.captures = [];
+  }
+
+  public ngAfterViewInit() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+        this.video.nativeElement.src = window.URL.createObjectURL(stream);
+        this.video.nativeElement.play();
+      });
+    }
+  }
+
+  public ngOnDestroy() {
+    console.log('fechando');
+    (this.video.nativeElement as HTMLVideoElement).pause();
+    (this.video.nativeElement as HTMLVideoElement).currentTime = 0;
+  }
+
+
+  public capture() {
+    var context = this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 640, 480);
+    this.captures.push(this.canvas.nativeElement.toDataURL("image/png"));
+  }
 
   @Input('multiplo')
   multiplo: boolean = false;

@@ -1,5 +1,5 @@
 <p>Formulário Pessoa</p>
-<button class="btn btn-primary" [routerLink]="['./novo']">Incluir</button>
+<button class="btn btn-primary" [routerLink]="['../novo']">Incluir</button>
 <button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
 <div class="container">
     <form [formGroup]="formulario">
@@ -126,10 +126,11 @@
                 <label for="ramal">Foto</label>
                 <div class="form-control">
                     <img class="img-thumbnail" src="data:image/png;base64,{{formulario.value.visitante.foto}}" *ngIf="formulario.value.visitante?.foto">
+                    <button class="btn-button success" (click)="carregarFoto()">Carregar</button>
                 </div>
             </div>
         </ng-container>
     </form>
 </div>
-<button class="btn btn-primary" [routerLink]="['../novo']">Salvar</button>
+<button class="btn btn-primary" (click)="salvar()">Salvar</button>
 <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>

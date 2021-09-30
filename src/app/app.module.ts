@@ -3,6 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import localePt from '@angular/common/locales/pt';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,8 +21,7 @@ import { AuthGuardAdminService } from './comum/servico/auth-guard/auth-guard.adm
 import { LayoutModule } from './layout/layout.module';
 import { SegurancaRoutingModule } from './seguranca/seguranca-routing.module';
 import { FrzComponentesModule } from './comum/frz-componentes/frz-componentes.module';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { AnexarModule } from './comum/servico/anexar/anexar.module';
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -45,6 +46,7 @@ registerLocaleData(localePt, 'pt-BR');
     LayoutModule,
     MatNativeDateModule,
     MatDialogModule,
+    AnexarModule,
   ],
   exports: [
   ],
