@@ -1,5 +1,5 @@
-import { Pessoa } from './pessoa';
 import { EntidadeRepresentante } from './entidade-representante';
+import { Pessoa } from './pessoa';
 
 export class Visitante {
 
@@ -8,5 +8,6 @@ export class Visitante {
     public email: string;
     public entidadeRepresentante: EntidadeRepresentante;
     public foto: number;
+    public pessoa: Pessoa;
 
 }

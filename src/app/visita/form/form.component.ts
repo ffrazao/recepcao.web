@@ -3,13 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { idListComparar } from '../../comum/ferramenta/ferramenta-comum';
-import { MensagemService } from '../../comum/servico/mensagem/mensagem.service';
-import { RestService } from '../service/rest.service';
-
 import { Local } from '../../modelo/entidade/local';
 import { Usuario } from '../../modelo/entidade/usuario';
 import { FormService } from '../service/form.service';
-import { Funcionario } from 'src/app/modelo/entidade/funcionario';
+import { Funcionario } from '../../modelo/entidade/funcionario';
+import { MensagemService } from '../../comum/servico/mensagem/mensagem.service';
+import { RestService } from '../../pessoa/service/rest.service';
 
 @Component({
   selector: 'app-form',
