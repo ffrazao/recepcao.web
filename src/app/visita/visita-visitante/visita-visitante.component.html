@@ -5,7 +5,8 @@
     <table class="table table-hover table-striped">
         <thead class="table-light">
             <tr>
-                <th></th>
+                <th>#</th>
+                <th>CPF</th>
                 <th>Foto</th>
                 <th>Visitante</th>
                 <th>Telefone</th>
@@ -17,36 +18,62 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of dados.controls; let i = index" [formGroup]="item">
+            <tr *ngFor="let item of dados.controls; let i = index">
                 <td>{{i + 1}}.</td>
+                <ng-container *ngIf="!item.editar">
+                    <td>{{item.value.visitante?.cpfCnpj}}</td>
+                    <td>
+                        <img *ngIf="item.value.visitante?.foto"
+                            src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"
+                            width="50" height="50" alt="Foto do visitante" />
+                    </td>
+                    <td>{{item.value.visitante?.nome}}</td>
+                    <td>{{item.value.telefone}}</td>
+                    <td>{{item.value.email}}</td>
+                    <td>{{item.value.entidadeRepresentante?.nome}}</td>
+                    <td>{{item.value.saida | date: 'EEEE, dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{item.value.saidaUsuario?.login}}</td>
+                </ng-container>
+
+                <ng-container *ngIf="item.editar" [formGroup]="item">
+                    <td>
+                        <ng-container formGroupName="visitante">
+                            <ng-container formGroupName="pessoa">
+                                <input type="text" class="form-control" id="cpfCnpj" placeholder="CPF/CNPJ"
+                                    formControlName="cpfCnpj" (blur)="encontraVisitante($event)">
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <img *ngIf="item.value.visitante?.foto"
+                            src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"
+                            width="50" height="50" alt="Foto do visitante" />
+                    </td>
+                    <td>{{item.value.visitante.pessoa.nome}}</td>
+                    <td>
+                        <input type="text" class="form-control" id="telefone" placeholder="(99) 9999-9999"
+                            formControlName="telefone">
+                    </td>
+                    <td>
+                        <input type="email" class="form-control" id="email" placeholder="usuario@dominio"
+                            formControlName="email">
+                    </td>
+                    <td>
+                        <select class="form-control" id="entidadeRepresentante" formControlName="entidadeRepresentante"
+                            [compareWith]="idListComparar">
+                            <option *ngFor="let subitem of entidadeRepresentanteList" [ngValue]="subitem">
+                                {{subitem.nome}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="datetime-local" class="form-control" id="saida" placeholder="Saída"
+                            formControlName="saida">
+                    </td>
+                    <td>{{item.value.saidaUsuario?.login}}</td>
+                </ng-container>
                 <td>
-                    <img *ngIf="item.value.visitante?.foto"
-                        src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"
-                        width="50" height="50" alt="Foto do visitante" />
-                </td>
-                <td>{{item.value.visitante?.nome}}</td>
-                <td>
-                    <ng-container *ngIf="!item.editar">{{item.value.telefone}}</ng-container>
-                    <input type="text" class="form-control" id="telefone" placeholder="(99) 9999-9999"
-                        formControlName="telefone" *ngIf="item.editar">
-                </td>
-                <td>
-                    <ng-container *ngIf="!item.editar">{{item.value.email}}</ng-container>
-                    <input type="email" class="form-control" id="email" placeholder="usuario@dominio"
-                        formControlName="email" *ngIf="item.editar">
-                </td>
-                <td>
-                    {{item.value.entidadeRepresentante?.nome}}
-                </td>
-                <td>
-                    <ng-container *ngIf="item.value.saida">{{item.value.saida | date: 'EEEE, dd/MM/yyyy HH:mm'}}
-                    </ng-container>
-                </td>
-                <td>
-                    <ng-container *ngIf="item.value.saida">{{item.value.saidaUsuario?.login}}</ng-container>
-                </td>
-                <td>
-                    <button class="btn btn-primary" (click)="item.editar = !item.editar">{{item.editar ? 'Salvar' : 'Editar'}}</button>
+                    <button class="btn btn-primary" (click)="item.editar = !item.editar">{{item.editar ? 'Salvar' :
+                        'Editar'}}</button>
                     <button class="btn btn-primary" (click)="excluir(i)" *ngIf="!item.editar">Excluir</button>
                 </td>
             </tr>

@@ -1,20 +1,24 @@
 import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Funcionario } from "src/app/modelo/entidade/funcionario";
-import { Local } from "src/app/modelo/entidade/local";
-import { Usuario } from "src/app/modelo/entidade/usuario";
 
-import { Visita } from "src/app/modelo/entidade/visita";
-import { VisitaVisitante } from "src/app/modelo/entidade/visita-visitante";
+import { VisitaVisitante } from "../../modelo/entidade/visita-visitante";
+import { Visitante } from "../../modelo/entidade/visitante";
+import { Visita } from "../../modelo/entidade/visita";
+import { FormService as PessoaFormService } from "../../pessoa/service/form.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormService {
-  constructor(private _fb: FormBuilder) {}
+  constructor(
+    private _fb: FormBuilder,
+    private _pessoaFormService: PessoaFormService
+    ) {
+
+    }
 
   criar(entidade: Visita): FormGroup {
-    entidade = entidade ? entidade : new Visita();
+    entidade = entidade || new Visita();
     let result = this._fb.group({
       id: [entidade.id, []],
       entradaLocal: [entidade.entradaLocal, []],
@@ -29,7 +33,7 @@ export class FormService {
   }
 
   criarVisitaVisitanteList(lista: VisitaVisitante[]) {
-    lista = lista ? lista : new Array<VisitaVisitante>();
+    lista = lista || new Array<VisitaVisitante>();
     const listaCtrl = [];
     for (const ent of lista) {
       listaCtrl.push(this.criarVisitaVisitante(ent));
@@ -39,10 +43,10 @@ export class FormService {
   }
 
   criarVisitaVisitante(entidade: VisitaVisitante): FormGroup {
-    entidade = entidade ? entidade : new VisitaVisitante();
+    entidade = entidade || new VisitaVisitante();
     let result = this._fb.group({
       id: [entidade.id, []],
-      visitante: [entidade.visitante, []],
+      visitante: this.criarVisitante(entidade.visitante),
       telefone: [entidade.telefone, []],
       email: [entidade.email, []],
       entidadeRepresentante: [entidade.entidadeRepresentante, []],
@@ -51,4 +55,18 @@ export class FormService {
     });
     return result;
   }
+
+  criarVisitante(entidade: Visitante): FormGroup {
+    entidade = entidade || new Visitante();
+    let result = this._fb.group({
+      id: [entidade.id, []],
+      telefone: [entidade.telefone, []],
+      email: [entidade.email, []],
+      entidadeRepresentante: [entidade.entidadeRepresentante, []],
+      foto: [entidade.foto, []],
+      pessoa: this._pessoaFormService.criar(entidade.pessoa),
+    });
+    return result;
+  }
+
 }

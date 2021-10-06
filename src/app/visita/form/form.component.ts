@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { idListComparar } from 'src/app/comum/ferramenta/ferramenta-comum';
+import { idListComparar } from '../../comum/ferramenta/ferramenta-comum';
 
 import { Local } from '../../modelo/entidade/local';
 import { Usuario } from '../../modelo/entidade/usuario';
