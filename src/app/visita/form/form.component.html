@@ -1,8 +1,8 @@
 <p>Formulário Visita</p>
-<button class="btn btn-primary" [routerLink]="['./novo']">Incluir</button>
+<button class="btn btn-primary" [routerLink]="['../novo']">Incluir</button>
 <button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
 <div class="container">
-    <form [formGroup]="formulario">
+    <form [formGroup]="formulario" (ngSubmit)="salvar()">
         <div class="form-group">
             <label for="entradaLocal">Entrada</label>
             <select class="form-control" id="entradaLocal" formControlName="entradaLocal" [compareWith]="idListComparar">
@@ -33,22 +33,20 @@
         </div>
         <div class="form-group">
             <label for="autorizador">Autorizador</label>
-            <select class="form-control" id="autorizador">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select class="form-control" id="autorizador" formControlName="autorizador" [compareWith]="idListComparar">
+                <option *ngFor="let item of funcionarioList" [ngValue]="item">
+                    {{item.pessoa.nome}}
+                </option>
             </select>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Incluido por</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <div class="form-control">{{formulario.value.incluidoPor.login}}</div>
         </div>
+        <button class="btn btn-primary" type="submit">Salvar</button>
+        <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
     </form>
 </div>
-<button class="btn btn-primary" [routerLink]="['../novo']">Salvar</button>
-<button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
 
 <div>
     {{formulario.value | json}}

@@ -1,20 +1,20 @@
-<p>Formulário Pessoa</p>
+<p>Formulário Funcionario</p>
 <button class="btn btn-primary" [routerLink]="['../novo']">Incluir</button>
 <button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
 <div class="container">
     <form [formGroup]="formulario" (ngSubmit)="salvar()">
         <div class="form-group">
-            <label for="entradaLocal">Tipo de Pessoa</label>
+            <label for="entradaLocal">Tipo de Funcionario</label>
             <div class="form-group">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="pessoaTipo" id="pessoaTipoPF" value="PF"
-                        formControlName="pessoaTipo" />
-                    <label class="form-check-label" for="pessoaTipoPF">Pessoa Física</label>
+                    <input class="form-check-input" type="radio" name="funcionarioTipo" id="funcionarioTipoPF" value="PF"
+                        formControlName="funcionarioTipo" />
+                    <label class="form-check-label" for="funcionarioTipoPF">Funcionario Física</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="pessoaTipo" id="pessoaTipoPJ" value="PJ"
-                        formControlName="pessoaTipo" />
-                    <label class="form-check-label" for="pessoaTipoPJ">Pessoa Jurídica</label>
+                    <input class="form-check-input" type="radio" name="funcionarioTipo" id="funcionarioTipoPJ" value="PJ"
+                        formControlName="funcionarioTipo" />
+                    <label class="form-check-label" for="funcionarioTipoPJ">Funcionario Jurídica</label>
                 </div>
             </div>
         </div>
@@ -43,8 +43,8 @@
             <input type="text" class="form-control" id="contato3" formControlName="contato3">
         </div>
         <div class="form-group">
-            <button class="btn btn-secondary" (click)="incluirPessoaEndereco()">Incluir</button>
-            <table class="table" formArrayName="pessoaEnderecoList">
+            <button class="btn btn-secondary" (click)="incluirLotacao()">Incluir</button>
+            <table class="table" formArrayName="lotacaoList">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>
@@ -59,7 +59,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of formulario.controls.pessoaEnderecoList['controls']; index as i">
+                    <tr *ngFor="let item of formulario.controls.lotacaoList['controls']; index as i">
                         <ng-container *ngIf="!item.editar">
                             <td>{{i + 1}}.</td>
                             <td>{{item.value.endereco.cep}}</td>
@@ -71,7 +71,7 @@
                             <td>{{item.value.endereco.uf}}</td>
                             <td>
                                 <button class="btn btn-secondary" (click)="item.editar = true">Editar</button>
-                                <button class="btn btn-secondary" (click)="excluirPessoaEndereco(i)">Excluir</button>
+                                <button class="btn btn-secondary" (click)="excluirLotacao(i)">Excluir</button>
                             </td>
                         </ng-container>
                         <ng-container *ngIf="item.editar" [formGroupName]="i">
@@ -97,39 +97,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="form-check">
-            <label class="form-check-label" for="eFuncionario">
-                É funcionário?
-            </label>
-            <input class="form-check-input" type="checkbox" id="eFuncionario" [(ngModel)]="eFuncionario"
-                [ngModelOptions]="{standalone: true}">
-        </div>
-        <ng-container *ngIf="eFuncionario" formGroupName="funcionario">
-            <div class="form-group">
-                <label for="matricula">Matricula</label>
-                <input type="text" class="form-control" id="matricula" formControlName="matricula">
-            </div>
-            <div class="form-group">
-                <label for="ramal">Ramal</label>
-                <input type="text" class="form-control" id="ramal" formControlName="ramal">
-            </div>
-        </ng-container>
-        <div class="form-check">
-            <label class="form-check-label" for="eVisitante">
-                É visitante?
-            </label>
-            <input class="form-check-input" type="checkbox" id="eVisitante" [(ngModel)]="eVisitante"
-                [ngModelOptions]="{standalone: true}">
-        </div>
-        <ng-container *ngIf="eVisitante" formGroupName="visitante">
-            <div class="form-group">
-                <label for="ramal">Foto</label>
-                <div class="form-control">
-                    <img class="img-thumbnail" src="data:image/png;base64,{{formulario.value.visitante.foto}}" *ngIf="formulario.value.visitante?.foto">
-                    <button class="btn-button success" (click)="carregarFoto()">Carregar</button>
-                </div>
-            </div>
-        </ng-container>
         <button class="btn btn-primary" type="submit">Salvar</button>
         <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
     </form>

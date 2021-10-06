@@ -19,13 +19,13 @@
             <ng-container *ngFor="let item of dados; let i = index">
                 <tr>
                     <td>{{i + 1}}.</td>
-                    <td>{{item.entradaLocal.nome}}</td>
+                    <td>{{item.entradaLocal?.nome}}</td>
                     <td>{{item.entrada | date: 'EEEE, dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{item.destinoLocal.nome}}</td>
+                    <td>{{item.destinoLocal?.nome}}</td>
                     <td>{{item.motivo}}</td>
-                    <td>{{item.autorizador.nome}}{{item.autorizador.contato1 ? ", " + item.autorizador.contato1 : ""}}
+                    <td>{{item.autorizador?.pessoa?.nome}}{{item.autorizador?.pessoa?.contato1 ? ", " + item.autorizador?.pessoa?.contato1 : ""}}
                     </td>
-                    <td>{{item.incluidoPor.login}}</td>
+                    <td>{{item.incluidoPor?.login}}</td>
                     <td>
                         <button class="btn btn-secondary" [routerLink]="['./', item.id]">Ver</button>
                     </td>

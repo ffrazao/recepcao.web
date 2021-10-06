@@ -8,13 +8,13 @@ import {
 } from "@angular/router";
 import { Observable, of } from "rxjs";
 
-import { Visita } from "src/app/modelo/entidade/visita";
+import { Pessoa } from "src/app/modelo/entidade/pessoa";
 import { RestService } from "../service/rest.service";
 
 @Injectable({
   providedIn: "root",
 })
-export class FormResolver implements Resolve<Visita> {
+export class FormResolver implements Resolve<Pessoa> {
   constructor(
     private _servico: RestService,
   ) {}
@@ -22,10 +22,10 @@ export class FormResolver implements Resolve<Visita> {
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<Visita> {
+  ): Observable<Pessoa> {
     let id = route.params.id;
     if (id.toLowerCase() === "novo") {
-      return this._servico.prepararForm(null);
+      return this._servico.prepararForm(new Pessoa());
     } else {
       return this._servico.restore(id);
     }

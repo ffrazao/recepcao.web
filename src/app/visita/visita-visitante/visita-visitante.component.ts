@@ -17,16 +17,12 @@ export class VisitaVisitanteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger;
-    console.log(this.dados);
   }
 
   incluir() {
-    this.dados.push(this._formService.criarVisitaVisitante(new VisitaVisitante()));
-  }
-
-  editar(pos: number) {
-    // this.dados.push(this._formService.criarVisitaVisitante(new VisitaVisitante()));
+    let entidade = this._formService.criarVisitaVisitante(new VisitaVisitante());
+    entidade['editar'] = true;
+    this.dados.push(entidade);
   }
 
   excluir(pos: number) {
