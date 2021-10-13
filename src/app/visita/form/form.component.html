@@ -2,7 +2,7 @@
 <button class="btn btn-primary" [routerLink]="['../novo']">Incluir</button>
 <button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
 <div class="container">
-    <form [formGroup]="formulario" (ngSubmit)="salvar()">
+    <form [formGroup]="formulario">
         <div class="form-group">
             <label for="entradaLocal">Entrada</label>
             <select class="form-control" id="entradaLocal" formControlName="entradaLocal" [compareWith]="idListComparar">
@@ -43,7 +43,7 @@
             <label for="exampleFormControlInput1">Incluido por</label>
             <div class="form-control">{{formulario.value.incluidoPor.login}}</div>
         </div>
-        <button class="btn btn-primary" type="submit">Salvar</button>
+        <button class="btn btn-primary" (click)="salvar()">Salvar</button>
         <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
     </form>
 </div>

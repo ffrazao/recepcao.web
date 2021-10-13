@@ -21,7 +21,7 @@
             <tr *ngFor="let item of dados.controls; let i = index">
                 <td>{{i + 1}}.</td>
                 <ng-container *ngIf="!item.editar">
-                    <td>{{item.value.visitante?.cpfCnpj}}</td>
+                    <td>{{item.value.visitante?.pessoa?.cpfCnpj}}</td>
                     <td>
                         <img *ngIf="item.value.visitante?.foto"
                             src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"

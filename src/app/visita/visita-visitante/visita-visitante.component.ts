@@ -7,6 +7,7 @@ import { idListComparar } from '../../comum/ferramenta/ferramenta-comum';
 import { RestService as EntidadeRepresentanteRestService } from "../../entidade-representante/service/rest.service";
 import { RestService as VisitanteRestService } from "../../visitante/service/rest.service";
 import { EntidadeRepresentante } from "../../modelo/entidade/entidade-representante";
+import { VisitanteFiltroDTO } from "src/app/modelo/dto/visitante.filtro.dto";
 
 @Component({
   selector: "app-visita-visitante",
@@ -45,9 +46,13 @@ export class VisitaVisitanteComponent implements OnInit {
   }
 
   encontraVisitante(event: FocusEvent) {
+    debugger;
     console.log(event);
     let cpf = (event.target as HTMLInputElement).value;
-    
+    this._visitanteRestService.filtro = this._visitanteRestService.filtro || new VisitanteFiltroDTO();
+    this._visitanteRestService.filtrar().subscribe(r => {
+      console.log(r);
+    });
   }
 
 }

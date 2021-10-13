@@ -5,21 +5,21 @@ import { Observable } from "rxjs";
 import { LoginService } from "../../seguranca/login/login.service";
 import { environment } from "../../../environments/environment";
 import { objectToQueryString } from "../../comum/ferramenta/ferramenta-comum";
-import { Pessoa } from "../../modelo/entidade/pessoa";
-import { PessoaFiltroDTO } from "../../modelo/dto/pessoa.filtro.dto";
+import { Visitante } from "../../modelo/entidade/visitante";
+import { VisitanteFiltroDTO } from "../../modelo/dto/visitante.filtro.dto";
 
 @Injectable({
   providedIn: "root",
 })
 export class RestService {
 
-  private funcionalidade = "pessoa";
+  private funcionalidade = "visitante";
 
-  filtro = new PessoaFiltroDTO();
+  filtro = new VisitanteFiltroDTO();
 
   constructor(private _http: HttpClient, private loginService: LoginService) {}
 
-  public create(entidade: Pessoa): Observable<number> {
+  public create(entidade: Visitante): Observable<number> {
     entidade["id"] = null;
     return this._http.post<number>(
       `${environment.REST_API_URL}/${this.funcionalidade}`,
@@ -28,14 +28,14 @@ export class RestService {
     );
   }
 
-  public restore(id: number): Observable<Pessoa> {
-    return this._http.get<Pessoa>(
+  public restore(id: number): Observable<Visitante> {
+    return this._http.get<Visitante>(
       `${environment.REST_API_URL}/${this.funcionalidade}/${id}`,
       { headers: this.loginService.apiRequestHttpHeader }
     );
   }
 
-  public update(id: number, entidade: Pessoa): Observable<void> {
+  public update(id: number, entidade: Visitante): Observable<void> {
     return this._http.put<void>(
       `${environment.REST_API_URL}/${this.funcionalidade}/${id}`,
       entidade,
@@ -50,8 +50,8 @@ export class RestService {
     );
   }
 
-  public prepararForm(modelo: Pessoa): Observable<Pessoa> {
-    return new Observable<Pessoa>((resolve) => {
+  public prepararForm(modelo: Visitante): Observable<Visitante> {
+    return new Observable<Visitante>((resolve) => {
       resolve.next(modelo);
       resolve.complete();
     });
@@ -62,8 +62,8 @@ export class RestService {
     // );
   }
 
-  public prepararFiltro(modelo: PessoaFiltroDTO): Observable<PessoaFiltroDTO> {
-    return new Observable<PessoaFiltroDTO>((resolve) => {
+  public prepararFiltro(modelo: VisitanteFiltroDTO): Observable<VisitanteFiltroDTO> {
+    return new Observable<VisitanteFiltroDTO>((resolve) => {
       resolve.next(modelo);
       resolve.complete();
     });
@@ -74,7 +74,7 @@ export class RestService {
     // );
   }
 
-  public filtrar(): Observable<Pessoa[]> {
+  public filtrar(): Observable<Visitante[]> {
     // captar parametros do filtro
     let param = "";
     if (this.filtro) {
@@ -84,7 +84,7 @@ export class RestService {
       }
     }
     if (this.funcionalidade) {
-      return this._http.get<Pessoa[]>(
+      return this._http.get<Visitante[]>(
         `${environment.REST_API_URL}/${this.funcionalidade}${param}`,
         { headers: this.loginService.apiRequestHttpHeader }
       );
