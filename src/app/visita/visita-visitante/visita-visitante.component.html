@@ -37,11 +37,22 @@
 
                 <ng-container *ngIf="item.editar" [formGroup]="item">
                     <td>
-                        <ng-container formGroupName="visitante">
+                        <ng-container formGroupName="visitante" *ngIf="!item?.value?.visitante?.pessoa?.cpfCnpj">
                             <ng-container formGroupName="pessoa">
-                                <input type="text" class="form-control" id="cpfCnpj" placeholder="CPF/CNPJ"
-                                    formControlName="cpfCnpj" (blur)="encontraVisitante($event)">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="cpfCnpj" placeholder="CPF"
+                                        aria-label="CPF" aria-describedby="CPF do visitante" [(ngModel)]="cpfPesq"
+                                        [ngModelOptions]="{standalone: true}">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        (click)="encontraVisitante($event, cpfPesq, item)"
+                                        [disabled]="!cpfPesq.trim().length">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
                             </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
+                            {{item.value.visitante.pessoa.cpfCnpj}}
                         </ng-container>
                     </td>
                     <td>
@@ -52,22 +63,26 @@
                     <td>{{item.value.visitante.pessoa.nome}}</td>
                     <td>
                         <input type="text" class="form-control" id="telefone" placeholder="(99) 9999-9999"
-                            formControlName="telefone">
+                            formControlName="telefone" *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
                     </td>
                     <td>
                         <input type="email" class="form-control" id="email" placeholder="usuario@dominio"
-                            formControlName="email">
+                            formControlName="email" *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
                     </td>
                     <td>
                         <select class="form-control" id="entidadeRepresentante" formControlName="entidadeRepresentante"
-                            [compareWith]="idListComparar">
+                            [compareWith]="idListComparar" *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
                             <option *ngFor="let subitem of entidadeRepresentanteList" [ngValue]="subitem">
                                 {{subitem.nome}}</option>
                         </select>
                     </td>
                     <td>
-                        <input type="datetime-local" class="form-control" id="saida" placeholder="Saída"
-                            formControlName="saida">
+                        <ng-container *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
+                            <input type="datetime-local" class="form-control" id="saida" placeholder="Saída"
+                                formControlName="saida">
+                            <button class="btn btn-secondary btn-sm" (click)="setSaida(item)">Agora</button>
+                            <button class="btn btn-light btn-sm" (click)="limparSaida(item)">Limpar</button>
+                        </ng-container>
                     </td>
                     <td>{{item.value.saidaUsuario?.login}}</td>
                 </ng-container>
