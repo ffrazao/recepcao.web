@@ -48,7 +48,6 @@ export class FormComponent implements OnInit {
   }
 
   salvar() {
-    console.log(1);
     let entidade = this.formulario.value;
     if (entidade.id) {
       this._rest.update(entidade.id, entidade).subscribe(r => {

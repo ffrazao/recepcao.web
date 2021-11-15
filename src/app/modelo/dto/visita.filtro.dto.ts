@@ -4,12 +4,12 @@ import { Funcionario } from "../entidade/funcionario";
 import { Usuario } from "../entidade/usuario";
 
 export class VisitaFiltroDTO extends FiltroIdDTO {
-  autorizadorList: Funcionario[];
+  autorizadorList: Funcionario[] | number[];
   cpf: string;
-  destinoLocalList: Local[];
+  destinoLocalList: Local[] | number[];
   entradaFim: Date | string;
   entradaInicio: Date | string;
-  entradaLocalList: Local[];
-  incluidoPorList: Usuario[];
+  entradaLocalList: Local[] | number[];
+  incluidoPorList: Usuario[] | number[];
   nome: string;
 }

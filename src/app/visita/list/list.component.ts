@@ -31,7 +31,6 @@ export class ListComponent implements OnInit {
   }
 
   ordena(dados: Visita[]) {
-    console.log(1);
     return dados.sort((a, b) => {
       if (!(a.entrada instanceof Date)) {
         a.entrada = new Date(a.entrada);

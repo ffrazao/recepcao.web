@@ -1,26 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
-  Router, Resolve,
+  Resolve,
   RouterStateSnapshot,
-  ActivatedRouteSnapshot
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { PessoaFiltroDTO } from '../../modelo/dto/pessoa.filtro.dto';
-import { Pessoa } from '../../modelo/entidade/pessoa';
-import { RestService } from '../service/rest.service';
+  ActivatedRouteSnapshot,
+} from "@angular/router";
+import { Observable, of } from "rxjs";
+
+import { VisitanteFiltroDTO } from "src/app/modelo/dto/visitante.filtro.dto";
+import { Visitante } from "src/app/modelo/entidade/visitante";
+import { RestService } from "../service/rest.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class ListResolver implements Resolve<Pessoa[]> {
+export class ListResolver implements Resolve<Visitante[]> {
 
-  constructor(
-    private _servico: RestService,
-  ) {
-  }
+  constructor(private _servico: RestService) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Pessoa[]> {
-    this._servico.filtro = this._servico.filtro ? this._servico.filtro : new PessoaFiltroDTO();
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Visitante[]> {
+    this._servico.filtro = this._servico.filtro
+      ? this._servico.filtro
+      : new VisitanteFiltroDTO();
     return this._servico.filtrar();
   }
 

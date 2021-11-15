@@ -20,6 +20,7 @@ export class ListResolver implements Resolve<Visita[]> {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Visita[]> {
+    console.log('filtro', this._servico.filtro);
     this._servico.filtro = this._servico.filtro ? this._servico.filtro : new VisitaFiltroDTO();
     return this._servico.filtrar();
   }
