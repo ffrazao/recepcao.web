@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { idListComparar } from '../../comum/ferramenta/ferramenta-comum';
@@ -8,7 +8,7 @@ import { Usuario } from '../../modelo/entidade/usuario';
 import { FormService } from '../service/form.service';
 import { Funcionario } from '../../modelo/entidade/funcionario';
 import { MensagemService } from '../../comum/servico/mensagem/mensagem.service';
-import { RestService } from '../../pessoa/service/rest.service';
+import { RestService } from '../service/rest.service';
 
 @Component({
   selector: 'app-form',
@@ -48,15 +48,16 @@ export class FormComponent implements OnInit {
   }
 
   salvar() {
+    console.log(1);
     let entidade = this.formulario.value;
     if (entidade.id) {
       this._rest.update(entidade.id, entidade).subscribe(r => {
-        this._router.navigate([`visita/${entidade.id}`]);
+        this._router.navigate([`visita/${entidade.id}`], {queryParamsHandling: 'merge'});
         this._mensagem.sucesso('Dados Salvos', 'Sucesso');
       });
     } else {
       this._rest.create(entidade).subscribe(r => {
-        this._router.navigate([`visita/${r}`]);
+        this._router.navigate([`visita/${r}`], {queryParamsHandling: 'merge'});
         this._mensagem.sucesso('Dados Salvos', 'Sucesso');
       });
     }

@@ -1,6 +1,6 @@
 <p>Formulário Visita</p>
-<button class="btn btn-primary" [routerLink]="['../novo']">Incluir</button>
-<button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button>
+<button class="btn btn-primary" [routerLink]="['../novo']" queryParamsHandling="merge">Incluir</button>
+<button class="btn btn-primary" [routerLink]="['./filtro']" queryParamsHandling="merge">Filtrar</button>
 <div class="container">
     <form [formGroup]="formulario">
         <div class="form-group">
@@ -43,15 +43,7 @@
             <label for="exampleFormControlInput1">Incluido por</label>
             <div class="form-control">{{formulario.value.incluidoPor.login}}</div>
         </div>
-        <button class="btn btn-primary" (click)="salvar()">Salvar</button>
-        <button class="btn btn-primary" [routerLink]="['../']">Cancelar</button>
+        <button class="btn btn-primary" (click)="salvar()" [disabled]="formulario.invalid">Salvar</button>
+        <button class="btn btn-primary" [routerLink]="['../']" queryParamsHandling="merge">Cancelar</button>
     </form>
-</div>
-
-<div>
-    {{formulario.value | json}}
-</div>
-
-<div>
-    {{usuarioList | json}}
 </div>

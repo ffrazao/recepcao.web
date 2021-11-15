@@ -1,5 +1,8 @@
 import { DTO } from './dto';
 
-export interface FiltroDTO extends DTO {
+export class FiltroDTO implements DTO {
+
+	public pagina: number;
+	public tamanho: number;
 
 }

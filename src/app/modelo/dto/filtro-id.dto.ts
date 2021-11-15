@@ -1,6 +1,6 @@
 import { FiltroDTO } from './filtro.dto';
 
-export class FiltroIdDTO implements FiltroDTO {
+export class FiltroIdDTO extends FiltroDTO {
 
     public id: string[];
 

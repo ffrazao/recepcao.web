@@ -1,6 +1,6 @@
 <p>Relação de Visitantes</p>
 <button class="btn btn-primary" (click)="incluir()">Incluir</button>
-<!-- <button class="btn btn-primary" [routerLink]="['./filtro']">Filtrar</button> -->
+<!-- <button class="btn btn-primary" [routerLink]="['./filtro']" queryParamsHandling="merge">Filtrar</button> -->
 <div class="table-responsive">
     <table class="table table-hover table-striped">
         <thead class="table-light">
@@ -13,7 +13,7 @@
                 <th>E-mail</th>
                 <th>Entidade Representante</th>
                 <th>Saída</th>
-                <th>Registrado Por</th>
+                <th>Saída Registrada Por</th>
                 <th>Ação</th>
             </tr>
         </thead>
@@ -27,7 +27,7 @@
                             src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"
                             width="50" height="50" alt="Foto do visitante" />
                     </td>
-                    <td>{{item.value.visitante?.nome}}</td>
+                    <td> {{item.value.visitante?.pessoa?.nome}}</td>
                     <td>{{item.value.telefone}}</td>
                     <td>{{item.value.email}}</td>
                     <td>{{item.value.entidadeRepresentante?.nome}}</td>
@@ -37,22 +37,18 @@
 
                 <ng-container *ngIf="item.editar" [formGroup]="item">
                     <td>
-                        <ng-container formGroupName="visitante" *ngIf="!item?.value?.visitante?.pessoa?.cpfCnpj">
-                            <ng-container formGroupName="pessoa">
-                                <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="cpfCnpj" placeholder="CPF"
-                                        aria-label="CPF" aria-describedby="CPF do visitante" [(ngModel)]="cpfPesq"
-                                        [ngModelOptions]="{standalone: true}">
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        (click)="encontraVisitante($event, cpfPesq, item)"
-                                        [disabled]="!cpfPesq.trim().length">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </ng-container>
-                        </ng-container>
+                        <div class="input-group mb-3" *ngIf="!item?.value?.visitante?.pessoa?.cpfCnpj">
+                            <input type="text" class="form-control" id="cpfCnpj" placeholder="CPF"
+                                aria-label="CPF" aria-describedby="CPF do visitante" [(ngModel)]="cpfPesq"
+                                [ngModelOptions]="{standalone: true}" (input)="formataCpf($event)">
+                            <button class="btn btn-outline-secondary" type="button"
+                                (click)="encontraVisitante($event, cpfPesq, item)"
+                                [disabled]="!cpfPesq.trim().length">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                         <ng-container *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
-                            {{item.value.visitante.pessoa.cpfCnpj}}
+                            {{item.value.visitante?.pessoa?.cpfCnpj}}
                         </ng-container>
                     </td>
                     <td>
@@ -60,7 +56,9 @@
                             src="{{item.value.visitante.foto ? 'data:image/jpg;base64,' + item.value.visitante.foto: ''}}"
                             width="50" height="50" alt="Foto do visitante" />
                     </td>
-                    <td>{{item.value.visitante.pessoa.nome}}</td>
+                    <td>
+                        {{item.value.visitante?.pessoa?.nome}}
+                    </td>
                     <td>
                         <input type="text" class="form-control" id="telefone" placeholder="(99) 9999-9999"
                             formControlName="telefone" *ngIf="item?.value?.visitante?.pessoa?.cpfCnpj">
@@ -95,5 +93,3 @@
         </tbody>
     </table>
 </div>
-
-{{dados.value | json}}

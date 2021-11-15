@@ -44,7 +44,7 @@ export class FormService {
     for (const ent of lista) {
       listaCtrl.push(this.criarPessoaEndereco(ent));
     }
-    const result = this._fb.array(listaCtrl, [Validators.required]);
+    const result = this._fb.array(listaCtrl, []);
     return result;
   }
 
@@ -74,7 +74,7 @@ export class FormService {
     for (const ent of lista) {
       listaCtrl.push(this.criarLotacao(ent));
     }
-    const result = this._fb.array(listaCtrl, [Validators.required]);
+    const result = this._fb.array(listaCtrl, []);
     return result;
   }
 

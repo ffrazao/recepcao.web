@@ -1,13 +1,15 @@
-import { FiltroIdDTO } from './filtro-id.dto';
+import { FiltroIdDTO } from "./filtro-id.dto";
+import { Local } from "../entidade/local";
+import { Funcionario } from "../entidade/funcionario";
+import { Usuario } from "../entidade/usuario";
 
 export class VisitaFiltroDTO extends FiltroIdDTO {
-
-    visitante: string;
-    entidadeRepresentante: string;
-    local: string;
-    autorizador: string;
-    incluidoPor: string;
-    dataInicio: Date;
-    dataFim: Date;
-
+  autorizadorList: Funcionario[];
+  cpf: string;
+  destinoLocalList: Local[];
+  entradaFim: Date | string;
+  entradaInicio: Date | string;
+  entradaLocalList: Local[];
+  incluidoPorList: Usuario[];
+  nome: string;
 }

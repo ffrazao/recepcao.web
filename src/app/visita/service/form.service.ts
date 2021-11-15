@@ -2,32 +2,33 @@ import { Injectable } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { VisitaVisitante } from "../../modelo/entidade/visita-visitante";
-import { Visitante } from "../../modelo/entidade/visitante";
 import { Visita } from "../../modelo/entidade/visita";
 import { FormService as PessoaFormService } from "../../pessoa/service/form.service";
+import { VisitaFiltroDTO } from "src/app/modelo/dto/visita.filtro.dto";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormService {
+
   constructor(
     private _fb: FormBuilder,
     private _pessoaFormService: PessoaFormService
-    ) {
-
-    }
+  ) {}
 
   criar(entidade: Visita): FormGroup {
     entidade = entidade || new Visita();
     let result = this._fb.group({
       id: [entidade.id, []],
-      entradaLocal: [entidade.entradaLocal, []],
-      entrada: [entidade.entrada, []],
-      destinoLocal: [entidade.destinoLocal, []],
-      motivo: [entidade.motivo, []],
-      autorizador: [entidade.autorizador, []],
-      incluidoPor: [entidade.incluidoPor, []],
-      visitaVisitanteList: this.criarVisitaVisitanteList(entidade.visitaVisitanteList),
+      entradaLocal: [entidade.entradaLocal, [Validators.required]],
+      entrada: [entidade.entrada, [Validators.required]],
+      destinoLocal: [entidade.destinoLocal, [Validators.required]],
+      motivo: [entidade.motivo, [Validators.required, Validators.minLength(3)]],
+      autorizador: [entidade.autorizador, [Validators.required]],
+      incluidoPor: [entidade.incluidoPor, [Validators.required]],
+      visitaVisitanteList: this.criarVisitaVisitanteList(
+        entidade.visitaVisitanteList
+      ),
     });
     return result;
   }
@@ -46,8 +47,8 @@ export class FormService {
     entidade = entidade || new VisitaVisitante();
     let result = this._fb.group({
       id: [entidade.id, []],
-      visitante: this.criarVisitante(entidade.visitante),
-      telefone: [entidade.telefone, []],
+      visitante: [entidade.visitante, [Validators.required]],
+      telefone: [entidade.telefone, [Validators.required]],
       email: [entidade.email, []],
       entidadeRepresentante: [entidade.entidadeRepresentante, []],
       saida: [entidade.saida, []],
@@ -56,15 +57,17 @@ export class FormService {
     return result;
   }
 
-  criarVisitante(entidade: Visitante): FormGroup {
-    entidade = entidade || new Visitante();
+  criarFiltro(entidade: VisitaFiltroDTO): FormGroup {
+    entidade = entidade || new VisitaFiltroDTO();
     let result = this._fb.group({
-      id: [entidade.id, []],
-      telefone: [entidade.telefone, []],
-      email: [entidade.email, []],
-      entidadeRepresentante: [entidade.entidadeRepresentante, []],
-      foto: [entidade.foto, []],
-      pessoa: this._pessoaFormService.criar(entidade.pessoa),
+      autorizadorList: [entidade.autorizadorList, []],
+      cpf: [entidade.cpf, []],
+      destinoLocalList: [entidade.destinoLocalList, []],
+      entradaFim: [entidade.entradaFim, []],
+      entradaInicio: [entidade.entradaInicio, []],
+      entradaLocalList: [entidade.entradaLocalList, []],
+      incluidoPorList: [entidade.incluidoPorList, []],
+      nome: [entidade.nome, []],
     });
     return result;
   }

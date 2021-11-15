@@ -8,6 +8,7 @@ import { RestService as EntidadeRepresentanteRestService } from "../../entidade-
 import { RestService as VisitanteRestService } from "../../visitante/service/rest.service";
 import { EntidadeRepresentante } from "../../modelo/entidade/entidade-representante";
 import { VisitanteFiltroDTO } from "src/app/modelo/dto/visitante.filtro.dto";
+import { LoginService } from "src/app/seguranca/login/login.service";
 
 @Component({
   selector: "app-visita-visitante",
@@ -23,7 +24,8 @@ export class VisitaVisitanteComponent implements OnInit {
   constructor(
     private _visitanteRestService: VisitanteRestService,
     private _entidadeRepresentanteRestService: EntidadeRepresentanteRestService,
-    private _formService: FormService
+    private _formService: FormService,
+    private _loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -57,9 +59,9 @@ export class VisitaVisitanteComponent implements OnInit {
     this._visitanteRestService.filtro.cpfCnpj = cpfPesq;
     this._visitanteRestService.filtrar().subscribe((r) => {
       if (r && r.length === 0) {
-        alert('Registro não localizado'); 
+        alert("Registro não localizado");
       } else if (r && r.length === 1) {
-          item.get("visitante").patchValue(r[0]);
+        item.get("visitante").patchValue(r[0]);
         item
           .get("telefone")
           .patchValue(
@@ -79,18 +81,42 @@ export class VisitaVisitanteComponent implements OnInit {
           .patchValue(r[0].entidadeRepresentante);
         console.log(r);
       }
-      this.cpfPesq = '';
+      this.cpfPesq = "";
     });
   }
 
   setSaida(item: FormControl) {
     let date = new Date();
-    let agora = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString().substr(0, 16); 
+    let agora = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+      .toISOString()
+      .substr(0, 16);
     item.get("saida").patchValue(agora);
+    item
+    .get("saidaUsuario")
+    .patchValue({ login: this._loginService.dadosLogin.username });
+
   }
 
   limparSaida(item: FormControl) {
-    item.get("saida").patchValue(null);
+    item.get("saida").patchValue(null);        item
+    .get("saidaUsuario")
+    .patchValue(null);
+  }
+
+  formataCpf(inputValue) {
+    let vlr = inputValue.target.value;
+    console.log("a");
+    const value = vlr.replace(/[^0-9]/g, ""); // remove except digits
+    let format = "***.***.***-**"; // You can change format
+
+    for (let i = 0; i < value.length; i++) {
+      format = format.replace("*", value.charAt(i));
+    }
+
+    if (format.indexOf("*") >= 0) {
+      format = format.substring(0, format.indexOf("*"));
+    }
+
+    inputValue.target.value = format.trim();
   }
 }
-//2021-11-13T02:05

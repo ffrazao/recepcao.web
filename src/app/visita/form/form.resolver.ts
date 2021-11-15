@@ -15,6 +15,7 @@ import { RestService } from "../service/rest.service";
   providedIn: "root",
 })
 export class FormResolver implements Resolve<Visita> {
+
   constructor(
     private _servico: RestService,
   ) {}

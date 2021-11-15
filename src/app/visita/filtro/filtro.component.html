@@ -1,1 +1,61 @@
 <p>Filtrar Visita</p>
+
+<div class="container">
+    <form [formGroup]="filtro">
+        <div class="form-group">
+            <label for="entradaLocal">Entrada</label>
+            <select class="form-control" id="entradaLocalList" formControlName="entradaLocalList" [compareWith]="idListComparar" multiple="true">
+                <option *ngFor="let item of localList | callback : filtraLocal : ['S']" [ngValue]="item">
+                    {{item.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="entrada">Hora Entrada entre</label>
+            <input type="datetime-local" class="form-control" id="entradaInicio" placeholder="dd/mm/aaaa hh:mm" formControlName="entradaInicio">
+            <label>Até</label>
+            <input type="datetime-local" class="form-control" id="entradaFim" placeholder="dd/mm/aaaa hh:mm" formControlName="entradaFim">
+        </div>
+        <div class="form-group">
+            <label for="destinoLocal">Destino</label>
+            <select class="form-control" id="destinoLocalList" formControlName="destinoLocalList" [compareWith]="idListComparar" multiple="true">
+                <option *ngFor="let item of localList | callback : filtraLocal : ['N']" [ngValue]="item">
+                    {{item.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Cpf Visitante (informe múltiplos separados por ponto e vírgula ";")</label>
+            <input type="text" class="form-control" id="cpf" placeholder="Ex.: 000.000.000-00; 111.111.111-111; 222.222.222-22" formControlName="cpf">
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Nome Visitante (informe múltiplos separados por ponto e vírgula ";")</label>
+            <input type="text" class="form-control" id="nome" placeholder="Ex.: José da Silva; Maria Pereira; Cristina Paiva" formControlName="nome">
+        </div>
+        <div class="form-group">
+            <label for="autorizador">Autorizador</label>
+            <select class="form-control" id="autorizadorList" formControlName="autorizadorList" [compareWith]="idListComparar" multiple="true">
+                <option *ngFor="let item of funcionarioList" [ngValue]="item">
+                    {{item.pessoa.nome}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Incluido por</label>
+            <select class="form-control" id="incluidoPorList" formControlName="incluidoPorList" [compareWith]="idListComparar" multiple="true">
+                <option *ngFor="let item of usuarioList" [ngValue]="item">
+                    {{item.login}}
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary" (click)="filtrar()" [disabled]="filtro.invalid">OK</button>
+        <button class="btn btn-primary" [routerLink]="['../']" queryParamsHandling="merge">Cancelar</button>
+    </form>
+</div>
+
+<div>
+    [{{filtro.status}}]
+</div>
+<div>
+    [{{filtro.value | json}}]
+</div>
