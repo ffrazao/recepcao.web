@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   ambiente: 'local',
-  REST_API_URL: 'http://localhost:8080',
-  AUTHORIZATION_SERVER: 'http://localhost:8080',
+  REST_API_URL: 'http://localhost:8080/recepcao',
+  AUTHORIZATION_SERVER: 'http://localhost:8080/recepcao',
   CLIENT_ID: 'recepcao_web',
   CLIENT_SECRET: 'recepcao_web',
 };

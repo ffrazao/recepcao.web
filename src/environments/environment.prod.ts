@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   ambiente: 'produção',
-  REST_API_URL: 'https://recepcao-rest.herokuapp.com',
-  AUTHORIZATION_SERVER: 'https://recepcao-rest.herokuapp.com',
+  REST_API_URL: 'http://localhost:8080/recepcao',
+  AUTHORIZATION_SERVER: 'http://localhost:8080/recepcao',
   CLIENT_ID: 'recepcao_web',
   CLIENT_SECRET: 'recepcao_web',
 };
